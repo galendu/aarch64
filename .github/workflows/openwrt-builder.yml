@@ -43,7 +43,7 @@ jobs:
       uses: actions/checkout@main
     - name: init_config
       run: |
-        
+        sudo snap install docker
         curl ifconfig.me
         echo """
         CONFIG_PACKAGE_ppp=y
