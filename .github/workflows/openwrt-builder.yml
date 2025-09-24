@@ -28,6 +28,7 @@ env:
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
   ROUTER_PASSWORD: ${{ secrets.ROUTER_PASSWORD }}
+  ROUTER_IP: ${{ secrets.ROUTER_IP }}
 
 
 jobs:
@@ -39,7 +40,7 @@ jobs:
       uses: actions/checkout@main
     - name: init_config
       run: |
-        CONFIG_PPPOE_USERNAME=${{CONFIG_PPPOE_USERNAME}} CONFIG_PPPOE_PASSWORD=${{CONFIG_PPPOE_PASSWORD}}  envsubst >.config
+        CONFIG_PPPOE_USERNAME=${{secrets.CONFIG_PPPOE_USERNAME}} CONFIG_PPPOE_PASSWORD=${{secrets.CONFIG_PPPOE_PASSWORD}}  envsubst  <.config
 
     - name: Initialization environment
       env:
@@ -97,7 +98,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j2 || make -j2 V=s
+        make -j$(nproc) || make -j4 || make -j4 V=s
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
