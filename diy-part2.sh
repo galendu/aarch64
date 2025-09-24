@@ -1,1 +1,24 @@
-#!/bin/bash## https://github.com/P3TERX/Actions-OpenWrt# File name: diy-part2.sh# Description: OpenWrt DIY script part 2 (After Update feeds)## Copyright (c) 2019-2024 P3TERX <https://p3terx.com>## This is free software, licensed under the MIT License.# See /LICENSE for more information.#set -eecho ">>> 开始执行 diy-part2.sh ..."# ========= 配置 root 密码 =========if [ -n "${ROUTER_PASSWORD}" ]; then  echo ">>> 设置 root 密码 ..."  PASS_HASH=$(openssl passwd -1 "${ROUTER_PASSWORD}")  mkdir -p openwrt/files/etc  echo "root:${PASS_HASH}:0:0:99999:7:::" > openwrt/files/etc/shadowelse  echo ">>> 未设置 ROUTER_PASSWORD，使用 OpenWrt 默认无密码"fi# Modify default IPsed -i "s/192.168.1.1/${ROUTER_IP}/g" package/base-files/files/bin/config_generate# Modify default themesed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile# Modify hostnamesed -i 's/LEDE/Galendu-Router/g' package/base-files/files/bin/config_generate
+#!/bin/bash
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# File name: diy-part2.sh
+# Description: OpenWrt DIY script part 2 (After Update feeds)
+#
+# Copyright (c) 2019-2024 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+set -e
+
+echo ">>> 开始执行 diy-part2.sh ..."
+
+# Modify default IP
+sed -i "s/192.168.1.1/${ROUTER_IP}/g" package/base-files/files/bin/config_generate
+
+# Modify default theme
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+
+# Modify hostname
+sed -i 's/LEDE/Galendu-Router/g' package/base-files/files/bin/config_generate
+
