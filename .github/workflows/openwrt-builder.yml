@@ -28,7 +28,7 @@ env:
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
   ROUTER_PASSWORD: ${{ secrets.ROUTER_PASSWORD }}
-  ROUTER_IP: ${{ secrets.ROUTER_IP }}
+#  ROUTER_IP: ${{ secrets.ROUTER_IP }}
   CONFIG_PPPOE_USERNAME: ${{ secrets.CONFIG_PPPOE_USERNAME }}
   CONFIG_PPPOE_PASSWORD: ${{ secrets.CONFIG_PPPOE_PASSWORD }}
 
