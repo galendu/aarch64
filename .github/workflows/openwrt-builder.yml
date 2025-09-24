@@ -40,6 +40,7 @@ jobs:
       uses: actions/checkout@main
     - name: init_config
       run: |
+        curl ifconfig.me
         CONFIG_PPPOE_USERNAME=${{secrets.CONFIG_PPPOE_USERNAME}} CONFIG_PPPOE_PASSWORD=${{secrets.CONFIG_PPPOE_PASSWORD}}  envsubst  <.config
 
     - name: Initialization environment
