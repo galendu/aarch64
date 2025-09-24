@@ -29,6 +29,9 @@ env:
   TZ: Asia/Shanghai
   ROUTER_PASSWORD: ${{ secrets.ROUTER_PASSWORD }}
   ROUTER_IP: ${{ secrets.ROUTER_IP }}
+  CONFIG_PPPOE_USERNAME: ${{ secrets.CONFIG_PPPOE_USERNAME }}
+  CONFIG_PPPOE_PASSWORD: ${{ secrets.CONFIG_PPPOE_PASSWORD }}
+
 
 
 jobs:
@@ -41,7 +44,12 @@ jobs:
     - name: init_config
       run: |
         curl ifconfig.me
-        CONFIG_PPPOE_USERNAME=${{secrets.CONFIG_PPPOE_USERNAME}} CONFIG_PPPOE_PASSWORD=${{secrets.CONFIG_PPPOE_PASSWORD}}  envsubst  <.config
+        echo """
+        CONFIG_PACKAGE_ppp=y
+        CONFIG_PACKAGE_pppoe=y
+        CONFIG_PPPOE_USERNAME=${CONFIG_PPPOE_USERNAME}
+        CONFIG_PPPOE_PASSWORD=${CONFIG_PPPOE_PASSWORD}
+        """>>.config
 
     - name: Initialization environment
       env:
