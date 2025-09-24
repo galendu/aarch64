@@ -27,6 +27,8 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
+  ROUTER_PASSWORD: ${{ secrets.ROUTER_PASSWORD }}
+
 
 jobs:
   build:
@@ -35,6 +37,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@main
+    - name: init_config
+      run: |
+        CONFIG_PPPOE_USERNAME=${{CONFIG_PPPOE_USERNAME}} CONFIG_PPPOE_PASSWORD=${{CONFIG_PPPOE_PASSWORD}}  envsubst >.config
 
     - name: Initialization environment
       env:
