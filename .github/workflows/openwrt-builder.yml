@@ -36,14 +36,14 @@ env:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout
       uses: actions/checkout@main
     - name: init_config
       run: |
-        sudo snap install docker
+        #sudo snap install docker
         curl ifconfig.me
         echo """
         CONFIG_PACKAGE_ppp=y
@@ -175,5 +175,6 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GHB_TOKEN }}
+
 
 
