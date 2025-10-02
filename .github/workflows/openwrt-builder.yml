@@ -23,7 +23,7 @@ on:
         default: false
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL: https://github.com/galendu/lede.git
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
@@ -186,6 +186,7 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GHB_TOKEN }}
+
 
 
 
