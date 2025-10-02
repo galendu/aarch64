@@ -15,6 +15,12 @@ name: OpenWrt Builder
 on:
   repository_dispatch:
   workflow_dispatch:
+    inputs:
+      debug_enabled:
+        type: boolean
+        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'
+        required: false
+        default: false
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -41,6 +47,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@main
+    - name: Setup tmate session
+      id: tmate
+      if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+        detached: true 
     - name: init_config
       run: |
         #sudo snap install docker
@@ -175,6 +188,7 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GHB_TOKEN }}
+
 
 
 
